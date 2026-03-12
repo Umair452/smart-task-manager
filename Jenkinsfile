@@ -32,7 +32,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo '🚀 Deploying application...'
-                sh 'GROQ_API_KEY=$GROQ_API_KEY docker compose up -d'
+                sh '''
+                    docker compose down
+                    GROQ_API_KEY=$GROQ_API_KEY docker compose up -d
+                '''
             }
         }
 
