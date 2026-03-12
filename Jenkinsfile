@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         APP_NAME = 'smart-task-manager'
+        GROQ_API_KEY = credentials('GROQ_API_KEY')
     }
 
     stages {
@@ -24,14 +25,14 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo '🐳 Building Docker images...'
-                sh 'docker compose build'
+                sh 'GROQ_API_KEY=$GROQ_API_KEY docker compose build'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo '🚀 Deploying application...'
-                sh 'docker compose up -d'
+                sh 'GROQ_API_KEY=$GROQ_API_KEY docker compose up -d'
             }
         }
 
