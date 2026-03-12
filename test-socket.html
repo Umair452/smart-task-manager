@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WebSocket Test</title>
+</head>
+
+<body>
+    <h1>WebSocket Test</h1>
+    <div id="events"></div>
+
+    <!-- Load Socket.IO client from CDN -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <script>
+        // Paste your JWT token here after logging in
+        const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIxNjg0NjMzLTBhZGUtNGNkZi05ZmU1LTVmYjVmYWZlOTM1ZCIsImVtYWlsIjoiam9obkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NzMyNjI1MTksImV4cCI6MTc3Mzg2NzMxOX0.MIUr14c2GH2-KAOyJ5anM4WHoyirL-5wAVnYTOhGgbw'
+
+        // Connect to our server
+        const socket = io('http://localhost:3000', {
+            auth: { token: TOKEN }
+        })
+
+        // When connected successfully
+        socket.on('connect', () => {
+            console.log('✅ Connected to WebSocket server!')
+            document.getElementById('events').innerHTML +=
+                '<p>✅ Connected!</p>'
+        })
+
+        // Listen for task events
+        socket.on('task:created', (data) => {
+            console.log('📝 Task created:', data)
+            document.getElementById('events').innerHTML +=
+                `<p>📝 ${data.message}</p>`
+        })
+
+        socket.on('task:assigned', (data) => {
+            console.log('👤 Task assigned:', data)
+            document.getElementById('events').innerHTML +=
+                `<p>👤 ${data.message}</p>`
+        })
+
+        socket.on('task:updated', (data) => {
+            console.log('✏️ Task updated:', data)
+            document.getElementById('events').innerHTML +=
+                `<p>✏️ ${data.message}</p>`
+        })
+
+        socket.on('task:deleted', (data) => {
+            console.log('🗑️ Task deleted:', data)
+            document.getElementById('events').innerHTML +=
+                `<p>🗑️ ${data.message}</p>`
+        })
+
+        // If connection fails
+        socket.on('connect_error', (error) => {
+            console.error('❌ Connection error:', error.message)
+            document.getElementById('events').innerHTML +=
+                `<p>❌ Error: ${error.message}</p>`
+        })
+    </script>
+</body>
+
+</html>

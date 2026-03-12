@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+
+# PM2
+.pm2
+
+# Git
+.git
+.gitignore
+
+# Docker files
+Dockerfile
+.dockerignore

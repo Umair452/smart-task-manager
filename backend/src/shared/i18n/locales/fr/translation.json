@@ -1,0 +1,34 @@
+{
+    "auth": {
+        "registerSuccess": "Utilisateur enregistré avec succès",
+        "loginSuccess": "Connexion réussie",
+        "invalidCredentials": "Identifiants invalides",
+        "emailInUse": "Email déjà utilisé",
+        "noToken": "Accès refusé. Aucun token fourni",
+        "invalidToken": "Token invalide ou expiré",
+        "noPermission": "Accès refusé. Vous n'avez pas la permission",
+        "required": "Nom, email et mot de passe sont requis"
+    },
+    "task": {
+        "created": "Tâche créée avec succès",
+        "fetched": "Tâches récupérées avec succès",
+        "fetchedOne": "Tâche récupérée avec succès",
+        "updated": "Tâche mise à jour avec succès",
+        "deleted": "Tâche supprimée avec succès",
+        "notFound": "Tâche non trouvée",
+        "titleRequired": "Le titre est requis",
+        "noPermissionView": "Vous n'avez pas la permission de voir cette tâche",
+        "noPermissionUpdate": "Vous n'avez pas la permission de mettre à jour cette tâche"
+    },
+    "ai": {
+        "prioritySuggested": "Suggestion de priorité générée",
+        "descriptionSuggested": "Suggestion de description générée",
+        "summarySuggested": "Résumé quotidien généré",
+        "titleRequired": "Le titre de la tâche est requis"
+    },
+    "general": {
+        "serverRunning": "Le serveur fonctionne!",
+        "loggedIn": "Vous êtes connecté!",
+        "welcomeAdmin": "Bienvenue Administrateur!"
+    }
+}

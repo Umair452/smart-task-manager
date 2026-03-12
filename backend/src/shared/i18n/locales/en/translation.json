@@ -1,0 +1,34 @@
+{
+    "auth": {
+        "registerSuccess": "User registered successfully",
+        "loginSuccess": "Login successful",
+        "invalidCredentials": "Invalid credentials",
+        "emailInUse": "Email already in use",
+        "noToken": "Access denied. No token provided",
+        "invalidToken": "Invalid or expired token",
+        "noPermission": "Access denied. You do not have permission",
+        "required": "Name, email and password are required"
+    },
+    "task": {
+        "created": "Task created successfully",
+        "fetched": "Tasks fetched successfully",
+        "fetchedOne": "Task fetched successfully",
+        "updated": "Task updated successfully",
+        "deleted": "Task deleted successfully",
+        "notFound": "Task not found",
+        "titleRequired": "Title is required",
+        "noPermissionView": "You do not have permission to view this task",
+        "noPermissionUpdate": "You do not have permission to update this task"
+    },
+    "ai": {
+        "prioritySuggested": "Priority suggestion generated",
+        "descriptionSuggested": "Description suggestion generated",
+        "summarySuggested": "Daily summary generated",
+        "titleRequired": "Task title is required"
+    },
+    "general": {
+        "serverRunning": "Server is running!",
+        "loggedIn": "You are logged in!",
+        "welcomeAdmin": "Welcome Admin!"
+    }
+}

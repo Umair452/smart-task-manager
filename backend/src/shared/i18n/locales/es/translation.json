@@ -1,0 +1,34 @@
+{
+    "auth": {
+        "registerSuccess": "Usuario registrado exitosamente",
+        "loginSuccess": "Inicio de sesión exitoso",
+        "invalidCredentials": "Credenciales inválidas",
+        "emailInUse": "El correo electrónico ya está en uso",
+        "noToken": "Acceso denegado. No se proporcionó token",
+        "invalidToken": "Token inválido o expirado",
+        "noPermission": "Acceso denegado. No tienes permiso",
+        "required": "Nombre, correo y contraseña son requeridos"
+    },
+    "task": {
+        "created": "Tarea creada exitosamente",
+        "fetched": "Tareas obtenidas exitosamente",
+        "fetchedOne": "Tarea obtenida exitosamente",
+        "updated": "Tarea actualizada exitosamente",
+        "deleted": "Tarea eliminada exitosamente",
+        "notFound": "Tarea no encontrada",
+        "titleRequired": "El título es requerido",
+        "noPermissionView": "No tienes permiso para ver esta tarea",
+        "noPermissionUpdate": "No tienes permiso para actualizar esta tarea"
+    },
+    "ai": {
+        "prioritySuggested": "Sugerencia de prioridad generada",
+        "descriptionSuggested": "Sugerencia de descripción generada",
+        "summarySuggested": "Resumen diario generado",
+        "titleRequired": "El título de la tarea es requerido"
+    },
+    "general": {
+        "serverRunning": "¡El servidor está funcionando!",
+        "loggedIn": "¡Has iniciado sesión!",
+        "welcomeAdmin": "¡Bienvenido Administrador!"
+    }
+}
