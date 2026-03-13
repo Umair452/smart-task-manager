@@ -18,43 +18,34 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(cors({ origin: '*' }))
-app.use(express.json())
+// Allow both local and production frontend
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        process.env.FRONTEND_URL || '*'
+    ],
+    credentials: true
+}))
 
-// i18n middleware
-// This runs on every request and detects the language
-// Then attaches t() function to req object
-// So in any controller you can use req.t('task.created')
+app.use(express.json())
 app.use(middleware.handle(i18next))
 
-// Routes
 app.use('/auth', authRoutes)
 app.use('/tasks', taskRoutes)
 app.use('/ai', aiRoutes)
 
 app.get('/health', (req, res) => {
-    // req.t() is the translation function
-    // attached by i18n middleware
     res.json({ status: 'ok', message: req.t('general.serverRunning') })
 })
 
 app.get('/profile', authenticate, (req, res) => {
-    res.json({
-        success: true,
-        message: req.t('general.loggedIn'),
-        data: req.user
-    })
+    res.json({ success: true, message: req.t('general.loggedIn'), data: req.user })
 })
 
 app.get('/admin', authenticate, authorize(['ADMIN']), (req, res) => {
-    res.json({
-        success: true,
-        message: req.t('general.welcomeAdmin'),
-        data: req.user
-    })
+    res.json({ success: true, message: req.t('general.welcomeAdmin'), data: req.user })
 })
 
-// Temporary test route
 app.get('/test-overdue', async (req, res) => {
     try {
         const now = new Date()
@@ -69,10 +60,7 @@ app.get('/test-overdue', async (req, res) => {
             where: { id: { in: overdueIds } },
             data: { status: 'OVERDUE' }
         })
-        res.json({
-            success: true,
-            message: `Marked ${updated.count} tasks as OVERDUE`
-        })
+        res.json({ success: true, message: `Marked ${updated.count} tasks as OVERDUE` })
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
     }
@@ -87,4 +75,4 @@ httpServer.listen(PORT, () => {
     console.log(`⚡ WebSocket server is ready!`)
 })
 
-export default app
+export default app 
