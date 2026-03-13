@@ -18,7 +18,6 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Allow both local and production frontend
 app.use(cors({
     origin: [
         'http://localhost:5173',
@@ -35,35 +34,15 @@ app.use('/tasks', taskRoutes)
 app.use('/ai', aiRoutes)
 
 app.get('/health', (req, res) => {
-    res.json({ status: 'ok', message: req.t('general.serverRunning') })
+    res.json({ status: 'ok', message: 'Server is running!' })
 })
 
 app.get('/profile', authenticate, (req, res) => {
-    res.json({ success: true, message: req.t('general.loggedIn'), data: req.user })
+    res.json({ success: true, data: req.user })
 })
 
 app.get('/admin', authenticate, authorize(['ADMIN']), (req, res) => {
-    res.json({ success: true, message: req.t('general.welcomeAdmin'), data: req.user })
-})
-
-app.get('/test-overdue', async (req, res) => {
-    try {
-        const now = new Date()
-        const overdueTasks = await prisma.task.findMany({
-            where: {
-                status: { notIn: ['OVERDUE', 'DONE'] },
-                dueDate: { not: null, lt: now }
-            }
-        })
-        const overdueIds = overdueTasks.map(task => task.id)
-        const updated = await prisma.task.updateMany({
-            where: { id: { in: overdueIds } },
-            data: { status: 'OVERDUE' }
-        })
-        res.json({ success: true, message: `Marked ${updated.count} tasks as OVERDUE` })
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
-    }
+    res.json({ success: true, data: req.user })
 })
 
 const httpServer = createServer(app)
@@ -71,8 +50,8 @@ initSocket(httpServer)
 startScheduler()
 
 httpServer.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`)
+    console.log(`🚀 Server running on port ${PORT}`)
     console.log(`⚡ WebSocket server is ready!`)
 })
 
-export default app 
+export default app
