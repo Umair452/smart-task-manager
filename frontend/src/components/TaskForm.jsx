@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Wand2, Loader } from 'lucide-react'
 import api from '../services/api'
 import useAuthStore from '../store/authStore'
+import toast from 'react-hot-toast'
 
 const TaskForm = ({ task, onSave, onCancel }) => {
     const { t } = useTranslation()
@@ -76,6 +77,12 @@ const TaskForm = ({ task, onSave, onCancel }) => {
         }
         if (!formData.assignedToId) {
             delete formData.assignedToId
+        } else {
+            // Find assigned user name for toast
+            const assignedUser = users.find(u => u.id === formData.assignedToId)
+            if (assignedUser) {
+                toast.success(`Task assigned to ${assignedUser.name}! 🎉`)
+            }
         }
         onSave(formData)
     }

@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar'
 import TaskCard from '../components/TaskCard'
 import TaskForm from '../components/TaskForm'
 import api from '../services/api'
+import toast from 'react-hot-toast'
 
 const Dashboard = () => {
     const { t } = useTranslation()
@@ -35,12 +36,15 @@ const Dashboard = () => {
         try {
             if (editingTask) {
                 await updateTask(editingTask.id, form)
+                toast.success('Task updated successfully! ✅')
             } else {
                 await createTask(form)
+                toast.success('Task created successfully! 🎉')
             }
             setShowForm(false)
             setEditingTask(null)
         } catch (error) {
+            toast.error('Something went wrong!')
             console.error('Save error:', error)
         }
     }
@@ -53,6 +57,7 @@ const Dashboard = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this task?')) {
             await deleteTask(id)
+            toast.success('Task deleted! 🗑️')
         }
     }
 
