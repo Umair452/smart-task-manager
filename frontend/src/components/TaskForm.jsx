@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Wand2, Loader } from 'lucide-react'
 import api from '../services/api'
+import useAuthStore from '../store/authStore'
 
 const TaskForm = ({ task, onSave, onCancel }) => {
     const { t } = useTranslation()
+    const { user } = useAuthStore()
 
     const [form, setForm] = useState({
         title: task?.title || '',
@@ -19,7 +21,6 @@ const TaskForm = ({ task, onSave, onCancel }) => {
     const [aiSuggestion, setAiSuggestion] = useState(null)
     const [users, setUsers] = useState([])
 
-    // Fetch all users for assignment dropdown
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -36,7 +37,6 @@ const TaskForm = ({ task, onSave, onCancel }) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    // AI suggest priority
     const handleSuggestPriority = async () => {
         if (!form.title) return
         setAiLoading(true)
@@ -54,7 +54,6 @@ const TaskForm = ({ task, onSave, onCancel }) => {
         setAiLoading(false)
     }
 
-    // AI suggest description
     const handleSuggestDescription = async () => {
         if (!form.title) return
         setAiLoading(true)
@@ -75,7 +74,6 @@ const TaskForm = ({ task, onSave, onCancel }) => {
         if (formData.dueDate) {
             formData.dueDate = `${formData.dueDate}T12:00:00.000Z`
         }
-        // Remove empty assignedToId
         if (!formData.assignedToId) {
             delete formData.assignedToId
         }
@@ -197,25 +195,27 @@ const TaskForm = ({ task, onSave, onCancel }) => {
                         />
                     </div>
 
-                    {/* Assign To */}
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
-                            Assign To
-                        </label>
-                        <select
-                            name="assignedToId"
-                            value={form.assignedToId}
-                            onChange={handleChange}
-                            className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-purple-400 bg-gray-50 transition"
-                        >
-                            <option value="">Select a user</option>
-                            {users.map((user) => (
-                                <option key={user.id} value={user.id}>
-                                    {user.name} ({user.role})
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    {/* Assign To - only show for ADMIN */}
+                    {user?.role === 'ADMIN' && (
+                        <div>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Assign To
+                            </label>
+                            <select
+                                name="assignedToId"
+                                value={form.assignedToId}
+                                onChange={handleChange}
+                                className="w-full border-2 border-gray-100 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-purple-400 bg-gray-50 transition"
+                            >
+                                <option value="">Select a user</option>
+                                {users.map((u) => (
+                                    <option key={u.id} value={u.id}>
+                                        {u.name} ({u.role})
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
 
                     {/* Buttons */}
                     <div className="flex gap-3 pt-2">
