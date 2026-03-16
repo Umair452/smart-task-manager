@@ -58,6 +58,23 @@ app.get('/test-overdue', async (req, res) => {
     }
 })
 
+// Get all users for task assignment dropdown
+app.get('/users', authenticate, async (req, res) => {
+    try {
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true
+            }
+        })
+        res.json({ success: true, data: users })
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
+})
+
 const httpServer = createServer(app)
 initSocket(httpServer)
 startScheduler()
